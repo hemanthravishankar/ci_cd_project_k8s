@@ -6,22 +6,35 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      # Give the default GITHUB_TOKEN write permission to commit and push the
-      # added or changed files to the repository.
-      contents: write
     steps:
-    - uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-        commit_message: Apply image name changes
-    - name: Checkout repository
-      uses: actions/checkout@v3
-      with:
-        ref: ${{ github.event.client_payload.ref }}
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Change something
         run: |
-         cd kube_all_files
-         echo "${{ github.event.client_payload.sha }}"
-         sed -i 's|image:.*|image: hemanthravishankar/notepad:${{ github.event.client_payload.sha }}|g' deployment.yaml
-    - uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-        commit_message: Apply php-cs-fixer changes
+          cd kube_all_files
+          echo "${{ github.event.client_payload.sha }}"
+          sed -i 's|image:.*|image: hemanthravishankar/notepad:${{ github.event.client_payload.sha }}|g' deployment.yaml     
+      - name: Commit and push changes
+        uses: devops-infra/action-commit-push@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          commit_message: Replaced foo with bar
+#     permissions:
+#       # Give the default GITHUB_TOKEN write permission to commit and push the
+#       # added or changed files to the repository.
+#       contents: write
+#     steps:
+#     - uses: stefanzweifel/git-auto-commit-action@v4
+#       with:
+#         commit_message: Apply image name changes
+#     - name: Checkout repository
+#       uses: actions/checkout@v3
+#       with:
+#         ref: ${{ github.event.client_payload.ref }}
+#         run: |
+#          cd kube_all_files
+#          echo "${{ github.event.client_payload.sha }}"
+#          sed -i 's|image:.*|image: hemanthravishankar/notepad:${{ github.event.client_payload.sha }}|g' deployment.yaml
+#     - uses: stefanzweifel/git-auto-commit-action@v4
+#       with:
+#         commit_message: Apply php-cs-fixer changes
