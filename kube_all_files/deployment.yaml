@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: notes-app-deployment
-        image: hemanthravishankar/notepad:1f46d5614e53d22352087ad456dd786d521274e5
+        image: hemanthravishankar/notepad:a2007626bb46326eca67f68d9effbe22185ff3d1
         resources:
           limits:
             cpu: "200m"
