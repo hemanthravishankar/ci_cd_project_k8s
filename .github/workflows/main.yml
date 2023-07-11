@@ -19,8 +19,11 @@ jobs:
          cd kube_all_files
          echo "${{ github.event.client_payload.sha }}"
          sed -i 's|image:.*|image: hemanthravishankar/notepad:${{ github.event.client_payload.sha }}|g' deployment.yaml
-    - name: Commit and push changes
-      uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-        github_token: ${{ secrets.COMMIT_TOKEN }}
-        commit_message: update image version.
+         cd ..
+         git commit -am "updating image verson"
+         git push https://${{ secrets.COMMIT_TOKEN }}@github.com/hemanthravishankar/ci_cd_project_k8s.git
+#     - name: Commit and push changes
+#       uses: stefanzweifel/git-auto-commit-action@v4
+#       with:
+#         github_token: ${{ secrets.COMMIT_TOKEN }}
+#         commit_message: update image version.
